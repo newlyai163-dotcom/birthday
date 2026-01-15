@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Nunito:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- HIGH-END STYLING --- */
+        :root {
+            --primary: #ff4d6d;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text: #fff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Card */
+        .app-container {
+            width: 350px;
+            height: 700px; /* Mobile Viewport size */
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Sections (Slides) */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.6s ease;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+        }
+
+        /* Typography */
+        h1, h2 {
+            font-family: 'Great Vibes', cursive;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        h1 { font-size: 3.5rem; line-height: 1.2; }
+        h2 { font-size: 2.5rem; color: #ffe6eb; }
+        p { font-size: 1.1rem; line-height: 1.6; text-align: center; }
+
+        /* Music Player UI */
+        .music-player {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: spin 4s linear infinite;
+            animation-play-state: paused;
+        }
+        .music-player.playing { animation-play-state: running; }
+        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Photo Circle */
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.5);
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Buttons */
+        .btn {
+            background: #fff;
+            color: #e73c7e;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        /* Floating Hearts */
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            animation: float 6s linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-800px); opacity: 0; }
+        }
+
+        /* Typing Effect Container */
+        .typewriter {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 15px;
+            min-height: 100px;
+            width: 100%;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="music-player" id="music-btn" onclick="toggleMusic()">
+            <i class="fas fa-music"></i>
+        </div>
+
+        <div class="slide active" id="slide1">
+            <h1>Hey Butkiii...</h1>
+            <p>I made something special just for you.</p>
+            <div style="font-size: 3rem; margin: 20px 0;">🎁</div>
+            <button class="btn" onclick="nextSlide(2)">Tap to Open</button>
+        </div>
+
+        <div class="slide" id="slide2">
+            <div class="photo-frame">
+                <img src="https://rival-magenta-wjcuummbnh.edgeone.app/her.jpg.jpg" alt="Her Photo">
+            </div>
+            <h2>Happy Birthday!</h2>
+            <p>To the girl who makes life so much more beautiful just by being in it.</p>
+            <button class="btn" onclick="nextSlide(3)">Why I Love You <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="slide" id="slide3">
+            <h2>3 Things I Love</h2>
+            <ul style="text-align: left; line-height: 2;">
+                <li>✨ Your smile that fixes my bad days</li>
+                <li>🧠 How incredibly smart you are</li>
+                <li>❤️ The way you look at me</li>
+            </ul>
+            <button class="btn" onclick="nextSlide(4)">One Last Note <i class="fas fa-envelope"></i></button>
+        </div>
+
+        <div class="slide" id="slide4">
+            <div class="photo-frame" style="width: 100px; height: 100px; border-width: 3px;">
+                <img src="https://gradual-harlequin-kmqlubseuv.edgeone.app/us.jpg.jpg" alt="My Photo">
+            </div>
+            <div class="typewriter" id="typewriter-text"></div>
+            <button class="btn" onclick="celebrate()">Make a Wish! 🎂</button>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://squealing-gray-615xsidlyz.edgeone.app/song.mp3.mp3"audio/mpeg">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- LOGIC ---
+        
+        let currentSlide = 1;
+        
+        function nextSlide(slideNumber) {
+            // Hide current
+            document.querySelector('.slide.active').classList.remove('active');
+            // Show next
+            const next = document.getElementById('slide' + slideNumber);
+            next.classList.add('active');
+            
+            // If going to the letter slide, start typing
+            if (slideNumber === 4) {
+                startTyping();
+            }
+        }
+
+        // Music Logic
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        // Auto-play music on first interaction (browsers block auto-audio)
+        document.body.addEventListener('click', function() {
+            if (audio.paused && currentSlide === 1) {
+                toggleMusic();
+            }
+        }, { once: true });
+
+        // Background Hearts
+        function createHearts() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's'; 
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove() }, 6000);
+        }
+        setInterval(createHearts, 300);
+
+        // Typing Effect
+        const text = "लोग कहते हैं वक़्त के साथ सब बदल जाता है, पर तुम्हारे लिए मेरा प्यार हर दिन और गहरा होता जा रहा है। तुम्हारे इस खास दिन पर बस यही कहूंगा कि तुम मेरी जिंदगी का सबसे खूबसूरत एहसास हो। जन्मदिन मुबारक हो! I love you! ❤️";
+        const typeWriterElement = document.getElementById('typewriter-text');
+        let i = 0;
+
+        function startTyping() {
+            if (i < text.length) {
+                typeWriterElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(startTyping, 50); // Speed of typing
+            }
+        }
+
+        // Confetti Explosion
+        function celebrate() {
+            const end = Date.now() + 15 * 1000;
+            const colors = ['#ff4d6d', '#ffffff'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+            
+            // Change button text
+            document.querySelector('#slide4 .btn').innerText = "Yayyy! 🥳";
+        }
+    </script>
+</body>
+</html>
